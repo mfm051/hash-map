@@ -50,4 +50,28 @@ describe HashMap do
       end
     end
   end
+
+  describe '#set' do
+    context 'when key is not present' do
+      it 'creates a new node' do
+        buckets = hash_map.instance_variable_get(:@buckets)
+
+        expect { hash_map.set('test', 1) }.to change { buckets.compact.size }.by(1)
+      end
+    end
+
+    context 'when key is already present' do
+      subject(:hash_map_one_node) { described_class.new }
+
+      before { hash_map_one_node.set('test', 1) }
+
+      it 'changes value of the node' do
+        buckets = hash_map_one_node.instance_variable_get(:@buckets)
+
+        node = buckets.compact[0]
+
+        expect { hash_map_one_node.set('test', 2) }.to change { node.value }.from(1).to(2)
+      end
+    end
+  end
 end

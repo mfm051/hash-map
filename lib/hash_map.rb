@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative 'node'
+
 class HashMap
   PRIME_NUMBER = 31
 
@@ -13,5 +15,17 @@ class HashMap
     raw_hash = string.chars.inject(0) { |sum, char| sum * PRIME_NUMBER + char.ord }
 
     raw_hash % @buckets.size
+  end
+
+  def set(key, value)
+    index = hash(key)
+
+    raise IndexError if index.negative? || index >= @buckets.length
+
+    if @buckets[index].nil?
+      @buckets[index] = Node.new(key, value)
+    else
+      @buckets[index].value = value
+    end
   end
 end
