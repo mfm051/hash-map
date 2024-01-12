@@ -51,6 +51,8 @@ class HashMap
 
   def values = @buckets.compact.map { |node| node.value }
 
+  def entries = @buckets.compact.map { |node| [node.key, node.value] }
+
   private
 
   def update_buckets

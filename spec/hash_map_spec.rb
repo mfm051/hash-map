@@ -194,4 +194,19 @@ describe HashMap do
       expect(values).to eq([1, 2, 2])
     end
   end
+
+  describe '#entries' do
+    subject(:hash_map) { described_class.new }
+
+    before do
+      hash_map.set('a', 1)
+      hash_map.set('b', 2)
+    end
+
+    it 'returns array with entries' do
+      entries = hash_map.entries
+
+      expect(entries).to be_an(Array).and contain_exactly(['b', 2], ['a', 1])
+    end
+  end
 end
