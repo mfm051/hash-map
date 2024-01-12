@@ -18,7 +18,7 @@ class HashMap
   end
 
   def set(key, value)
-    index = index(key)
+    index = hash(key)
 
     raise IndexError if index.negative? || index >= @buckets.length
 
@@ -28,17 +28,17 @@ class HashMap
   end
 
   def get(key)
-    @buckets[index(key)]&.value
+    @buckets[hash(key)]&.value
   end
 
   def key?(key)
-    @buckets[index(key)]&.key == key
+    @buckets[hash(key)]&.key == key
   end
 
   def remove(key)
     return unless key?(key)
 
-    @buckets[index(key)] = nil
+    @buckets[hash(key)] = nil
   end
 
   def length = @buckets.compact.size
@@ -66,6 +66,4 @@ class HashMap
   def over_load_factor?
     (@buckets.compact.size / @buckets.size.to_f) >= 0.75
   end
-
-  def index(key) = hash(key)
 end
