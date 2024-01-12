@@ -96,7 +96,7 @@ describe HashMap do
 
     context 'when key is present' do
       before { hash_map.set('test', 1) }
-          
+ 
       it 'returns value of given key' do
         value = hash_map.get('test')
 
@@ -109,6 +109,28 @@ describe HashMap do
         nil_value = hash_map.get('nonexistent_key')
 
         expect(nil_value).to be_nil 
+      end
+    end
+  end
+
+  describe '#key?' do
+    subject(:hash_map) { described_class.new }
+
+    context 'when key is present in hash_map' do
+      before { hash_map.set('test', 1) }
+
+      it 'returns true' do
+        existent_key = 'test'
+
+        expect(hash_map.key?(existent_key)).to be true
+      end
+    end
+
+    context 'when key is not present in hash_map' do
+      it 'returns false' do
+        nonexistent_key = 'another_test'
+
+        expect(hash_map.key?(nonexistent_key)).to be false
       end
     end
   end
