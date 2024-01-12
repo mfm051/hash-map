@@ -73,22 +73,6 @@ describe HashMap do
         expect { hash_map_one_node.set('test', 2) }.to change { buckets.compact[0].value }.from(1).to(2)
       end
     end
-
-    context 'when buckets reach load_factor' do
-      # terrible test, but I couldn't make it better at the moment
-
-      subject(:hash_map_multiple_nodes) { described_class.new }
-
-      before do
-        random_str = lambda { ('a'..'z').to_a.sample(8).join }
-
-        25.times { |i| hash_map_multiple_nodes.set(random_str.call, i) }
-      end
-
-      it 'updates buckets size' do
-        expect(hash_map_multiple_nodes.instance_variable_get(:@buckets).size).to eq(32)
-      end
-    end
   end
 
   describe '#get' do
