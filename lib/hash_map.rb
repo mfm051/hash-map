@@ -47,9 +47,9 @@ class HashMap
     @buckets = Array.new(@buckets.size)
   end
 
-  def keys
-    @buckets.compact.map { |node| node.key }
-  end
+  def keys = @buckets.compact.map { |node| node.key }
+
+  def values = @buckets.compact.map { |node| node.value }
 
   private
 

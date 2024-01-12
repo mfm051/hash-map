@@ -178,4 +178,20 @@ describe HashMap do
       expect(keys).to eq(%w[a b c])
     end
   end
+
+  describe '#values' do
+    subject(:hash_map) { described_class.new }
+
+    before do
+      hash_map.set('a', 1)
+      hash_map.set('b', 2)
+      hash_map.set('c', 2)
+    end
+
+    it 'returns array with keys' do
+      values = hash_map.values
+
+      expect(values).to eq([1, 2, 2])
+    end
+  end
 end
