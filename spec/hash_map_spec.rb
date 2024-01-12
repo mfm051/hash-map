@@ -162,4 +162,20 @@ describe HashMap do
       expect { hash_map_one_node.clear }.to change { hash_map_one_node.length }.from(1).to(0)
     end
   end
+
+  describe '#keys' do
+    subject(:hash_map) { described_class.new }
+
+    before do
+      hash_map.set('a', 1)
+      hash_map.set('b', 2)
+      hash_map.set('c', 2)
+    end
+
+    it 'returns array with keys' do
+      keys = hash_map.keys
+      
+      expect(keys).to eq(%w[a b c])
+    end
+  end
 end
