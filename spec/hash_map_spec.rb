@@ -118,4 +118,28 @@ describe HashMap do
       end
     end
   end
+
+  describe 'remove' do
+    subject(:hash_map) { described_class.new }
+
+    before { hash_map.set('remove_me', 1) }
+   
+    let(:occupied_buckets_size) { hash_map.instance_variable_get(:@buckets).compact.size }
+    
+    context 'when key is present' do
+      it 'removes node' do
+        hash_map.remove('remove_me')
+
+        expect(occupied_buckets_size).to be_zero
+      end
+    end
+
+    context 'when key is not present' do
+      it 'does not change present nodes' do
+        hash_map.remove('not present')
+
+        expect(occupied_buckets_size).to eq(1) 
+      end
+    end
+  end
 end

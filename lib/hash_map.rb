@@ -35,6 +35,12 @@ class HashMap
     @buckets[index(key)]&.key == key
   end
 
+  def remove(key)
+    return unless key?(key)
+
+    @buckets[index(key)] = nil
+  end
+
   private
 
   def update_buckets
