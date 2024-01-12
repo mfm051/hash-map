@@ -3,9 +3,9 @@
 require_relative '../lib/hash_map'
 
 describe HashMap do
-  subject(:hash_map) { described_class.new }
-  
   describe '#hash' do
+    subject(:hash_map) { described_class.new }
+    
     context 'when argument is not a string' do
       it 'raises an error' do
         not_str = 2
@@ -53,6 +53,8 @@ describe HashMap do
 
   describe '#set' do
     context 'when key is not present' do
+      subject(:hash_map) { described_class.new }
+      
       it 'creates a new node' do
         buckets = hash_map.instance_variable_get(:@buckets)
 
@@ -68,9 +70,23 @@ describe HashMap do
       it 'changes value of the node' do
         buckets = hash_map_one_node.instance_variable_get(:@buckets)
 
-        node = buckets.compact[0]
+        expect { hash_map_one_node.set('test', 2) }.to change { buckets.compact[0].value }.from(1).to(2)
+      end
+    end
 
-        expect { hash_map_one_node.set('test', 2) }.to change { node.value }.from(1).to(2)
+    context 'when buckets reach load_factor' do
+      # terrible test, but I couldn't make it better at the moment
+
+      subject(:hash_map_multiple_nodes) { described_class.new }
+
+      before do
+        random_str = lambda { ('a'..'z').to_a.sample(8).join }
+
+        25.times { |i| hash_map_multiple_nodes.set(random_str.call, i) }
+      end
+
+      it 'updates buckets size' do
+        expect(hash_map_multiple_nodes.instance_variable_get(:@buckets).size).to eq(32)
       end
     end
   end

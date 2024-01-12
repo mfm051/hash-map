@@ -10,7 +10,7 @@ class HashMap
   end
 
   def hash(string)
-    raise ArgumentError, "Hash limited to string" unless string.is_a?(String)
+    raise ArgumentError, 'Hash limited to string' unless string.is_a?(String)
 
     raw_hash = string.chars.inject(0) { |sum, char| sum * PRIME_NUMBER + char.ord }
 
@@ -22,10 +22,22 @@ class HashMap
 
     raise IndexError if index.negative? || index >= @buckets.length
 
-    if @buckets[index].nil?
-      @buckets[index] = Node.new(key, value)
-    else
-      @buckets[index].value = value
-    end
+    @buckets[index] = Node.new(key, value)
+
+    update_buckets if over_load_factor?
+  end
+
+  private
+
+  def update_buckets
+    new_buckets = Array.new(@buckets.size * 2)
+
+    @buckets.each_with_index { |node, i| new_buckets[i] = node }
+
+    @buckets = new_buckets
+  end
+
+  def over_load_factor?
+    (@buckets.compact.size / @buckets.size.to_f) >= 0.75
   end
 end
