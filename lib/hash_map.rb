@@ -41,6 +41,8 @@ class HashMap
     @buckets[index(key)] = nil
   end
 
+  def length = @buckets.compact.size
+
   private
 
   def update_buckets

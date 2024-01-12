@@ -119,7 +119,7 @@ describe HashMap do
     end
   end
 
-  describe 'remove' do
+  describe '#remove' do
     subject(:hash_map) { described_class.new }
 
     before { hash_map.set('remove_me', 1) }
@@ -140,6 +140,16 @@ describe HashMap do
 
         expect(occupied_buckets_size).to eq(1) 
       end
+    end
+  end
+
+  describe 'length' do
+    subject(:hash_map_one_node) { described_class.new }
+
+    before { hash_map_one_node.set('test', 1) }
+
+    it 'returns num of occupied buckets' do
+      expect(hash_map_one_node.length).to eq(1)
     end
   end
 end
