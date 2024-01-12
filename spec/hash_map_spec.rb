@@ -90,4 +90,26 @@ describe HashMap do
       end
     end
   end
+
+  describe '#get' do
+    subject(:hash_map) { described_class.new }
+
+    context 'when key is present' do
+      before { hash_map.set('test', 1) }
+          
+      it 'returns value of given key' do
+        value = hash_map.get('test')
+
+        expect(value).to eq(1) 
+      end
+    end
+
+    context 'when key is not present' do
+      it 'returns nil' do
+        nil_value = hash_map.get('nonexistent_key')
+
+        expect(nil_value).to be_nil 
+      end
+    end
+  end
 end

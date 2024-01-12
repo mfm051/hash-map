@@ -27,6 +27,12 @@ class HashMap
     update_buckets if over_load_factor?
   end
 
+  def get(key)
+    index = hash(key)
+
+    @buckets[index]&.value
+  end
+
   private
 
   def update_buckets
