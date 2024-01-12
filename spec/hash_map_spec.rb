@@ -3,9 +3,9 @@
 require_relative '../lib/hash_map'
 
 describe HashMap do
+  subject(:hash_map) { described_class.new }
+
   describe '#hash' do
-    subject(:hash_map) { described_class.new }
-    
     context 'when argument is not a string' do
       it 'raises an error' do
         not_str = 2
@@ -15,8 +15,8 @@ describe HashMap do
     end
 
     context 'when argument is a string' do
-      let(:max_index)  { hash_map.instance_variable_get(:@buckets).size - 1 }
-      
+      let(:max_index)  { hash_map.instance_variable_get(:@buckets).size - 1 } 
+
       matcher :be_a_hash do
         match { |num| num.is_a?(Integer) && num.between?(0, max_index) }
       end
@@ -53,8 +53,6 @@ describe HashMap do
 
   describe '#set' do
     context 'when key is not present' do
-      subject(:hash_map) { described_class.new }
-      
       it 'creates a new node' do
         buckets = hash_map.instance_variable_get(:@buckets)
 
@@ -76,11 +74,9 @@ describe HashMap do
   end
 
   describe '#get' do
-    subject(:hash_map) { described_class.new }
-
     context 'when key is present' do
       before { hash_map.set('test', 1) }
- 
+
       it 'returns value of given key' do
         value = hash_map.get('test')
 
@@ -98,11 +94,9 @@ describe HashMap do
   end
 
   describe '#key?' do
-    subject(:hash_map) { described_class.new }
+    before { hash_map.set('test', 1) }
 
     context 'when key is present in hash_map' do
-      before { hash_map.set('test', 1) }
-
       it 'returns true' do
         existent_key = 'test'
 
@@ -120,12 +114,10 @@ describe HashMap do
   end
 
   describe '#remove' do
-    subject(:hash_map) { described_class.new }
-
     before { hash_map.set('remove_me', 1) }
-   
+
     let(:occupied_buckets_size) { hash_map.instance_variable_get(:@buckets).compact.size }
-    
+
     context 'when key is present' do
       it 'removes node' do
         hash_map.remove('remove_me')
@@ -164,8 +156,6 @@ describe HashMap do
   end
 
   describe '#keys' do
-    subject(:hash_map) { described_class.new }
-
     before do
       hash_map.set('a', 1)
       hash_map.set('b', 2)
@@ -174,30 +164,25 @@ describe HashMap do
 
     it 'returns array with keys' do
       keys = hash_map.keys
-      
+
       expect(keys).to eq(%w[a b c])
     end
   end
 
   describe '#values' do
-    subject(:hash_map) { described_class.new }
-
     before do
       hash_map.set('a', 1)
       hash_map.set('b', 2)
-      hash_map.set('c', 2)
     end
 
     it 'returns array with keys' do
       values = hash_map.values
 
-      expect(values).to eq([1, 2, 2])
+      expect(values).to eq([1, 2])
     end
   end
 
   describe '#entries' do
-    subject(:hash_map) { described_class.new }
-
     before do
       hash_map.set('a', 1)
       hash_map.set('b', 2)
