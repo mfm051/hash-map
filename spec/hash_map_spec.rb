@@ -152,4 +152,14 @@ describe HashMap do
       expect(hash_map_one_node.length).to eq(1)
     end
   end
+
+  describe '#clear' do
+    subject(:hash_map_one_node) { described_class.new }
+
+    before { hash_map_one_node.set('test', 1) }
+
+    it 'removes all entries of hash map' do
+      expect { hash_map_one_node.clear }.to change { hash_map_one_node.length }.from(1).to(0)
+    end
+  end
 end

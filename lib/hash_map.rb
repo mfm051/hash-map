@@ -43,6 +43,10 @@ class HashMap
 
   def length = @buckets.compact.size
 
+  def clear
+    @buckets = Array.new(@buckets.size)
+  end
+
   private
 
   def update_buckets
